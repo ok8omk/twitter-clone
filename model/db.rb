@@ -1,10 +1,15 @@
 # coding: UTF-8
-require 'bcrypt'
 require 'active_record'
 
 # DB設定ファイルの読み込み
-ActiveRecord::Base.configurations = YAML.load_file('./model/database.yml')
-ActiveRecord::Base.establish_connection('development')
+ActiveRecord::Base.establish_connection(
+	adapter: "mysql2",
+	database: "twitter",
+	host: "localhost",
+	username: "root",
+	password: "",
+	encoding: "utf8"
+)
 
   Encoding.default_external = 'UTF-8'
 
@@ -19,15 +24,6 @@ ActiveRecord::Base.establish_connection('development')
     	set :inline_templates, true
  	 end
 
-
-class User < ActiveRecord::Base
-	validates :password_digest, presence: true
-   	validates :name, uniqueness: true, presence: true,length: {minimum: 2, maximum:  10}
-
- 	 # for helper methods
- 	 has_secure_password
-end
-	# coding: UTF-8
 helpers do
 	def login?
 		if session[:user_id] == nil then
@@ -46,9 +42,13 @@ helpers do
 		session.delete(:user_id)
 	end
 end
+class User < ActiveRecord::Base
+   	validates :name, uniqueness: true, presence: true,length: {minimum: 2, maximum:  10}
+end
 
 class Tweet < ActiveRecord::Base
 end
 
 class RelationShip < ActiveRecord::Base
 end
+
