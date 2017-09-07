@@ -2,6 +2,8 @@
 <head>
   <meta charset="UTF-8">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/siimple/2.0.0/siimple.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700">
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
@@ -11,16 +13,16 @@
         <a href="/"><i class="fa fa-home" aria-hidden="true"></i></a>
     </li>
     <li>
-        <a href="user"><i class="fa fa-user" aria-hidden="true"></i></a>
+        <a href="/user/<%= session[:user_id] %>"><i class="fa fa-user" aria-hidden="true"></i></a>
     </li>
     <li>
-        <a href="search"><i class="fa fa-search" aria-hidden="true"></i></a>
+        <a href="/search"><i class="fa fa-search" aria-hidden="true"></i></a>
     </li>
     <li>
-        <a href="tweet"><i class="fa fa-comment" aria-hidden="true"></i></a>
+        <a href="/tweet"><i class="fa fa-comment" aria-hidden="true"></i></a>
     </li>
     <li>
-        <a href="logout"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
+        <a href="/logout"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
     </li>
 </ul>
 </header>
