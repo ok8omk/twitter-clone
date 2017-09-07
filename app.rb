@@ -8,16 +8,19 @@ require 'date'
 
 
 	get '/' do
-
-		@relation=Relationship.where(user_id: session[:user_id]).all
-		@tweets=[]
-		@relation.each{|rel|
-			@tweet=Tweet.where(user_id: rel.follow_id).all.each{|tw|
-				@tweets.push(tw)
+		if login? then
+			@relation=Relationship.where(user_id: session[:user_id]).all
+			@tweets=[]
+			@relation.each{|rel|
+				@tweet=Tweet.where(user_id: rel.follow_id).all.each{|tw|
+					@tweets.push(tw)
+				}
 			}
-		}
-		@tweets
-		erb :index 
+			@tweets
+			erb :index 
+		else
+			redirect "/login"
+		end
 
 	end
 
@@ -70,15 +73,18 @@ require 'date'
 		Tweet.create(
 			user_id: session[:user_id],
 			text: params[:tweet],
-			post_time: Date.today.to_time
+			post_time: DateTime.now
 		)
 		p session[:user_id]
 		redirect '/'
 	end
+
 	get '/search' do
 		erb :search
 	end
 
 	get '/user/:id' do
+		@user=User.find_by(id: params[:id])
+		@tweets=Tweet.where(user_id: params[:id]).all
 		erb :user
 	end
