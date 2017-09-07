@@ -7,30 +7,30 @@ require 'sinatra/reloader'
 		erb :index 
 	end
 
-	get '/login'
+	get '/login' do
 		erb :login
 	end
 
-	get '/register'
+	get '/register' do
 		erb :register
 	end
 
-	get '/user/follower'
+	get '/user/follower' do
 		erb :follower
 	end
 
-	get '/user/follow'
+	get '/user/follow' do
 		erb :follow
 	end
 
-	get '/tweet'
+	get '/tweet' do
 		erb :tweet
 	end
 
-	get '/search'
+	get '/search' do
 		erb :search
 	end
 
-	get '/user'
+	get '/user' do
 		erb :user
 	end
