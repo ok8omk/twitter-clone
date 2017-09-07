@@ -75,7 +75,11 @@ require 'date'
 		p session[:user_id]
 		redirect '/'
 	end
+
+    # Search page
 	get '/search' do
+        @word = params[:word]
+        @users = User.where(name: @word).all
 		erb :search
 	end
 
