@@ -8,7 +8,17 @@ require 'date'
 
 
 	get '/' do
-		erb :index
+
+		@relation=Relationship.where(user_id: session[:user_id]).all
+		@tweets=[]
+		@relation.each{|rel|
+			@tweet=Tweet.where(user_id: rel.follow_id).all.each{|tw|
+				@tweets.push(tw)
+			}
+		}
+		@tweets
+		erb :index 
+
 	end
 
 	get '/login' do
@@ -69,6 +79,6 @@ require 'date'
 		erb :search
 	end
 
-	get '/user' do
+	get '/user/:id' do
 		erb :user
 	end

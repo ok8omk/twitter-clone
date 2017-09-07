@@ -49,5 +49,5 @@ end
 class Tweet < ActiveRecord::Base
 end
 
-class RelationShip < ActiveRecord::Base
+class Relationship < ActiveRecord::Base
 end

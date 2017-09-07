@@ -1,25 +1,17 @@
 Time Line
 
-<ul class="timeline">
-
-    <li class="tweet">
-        <span class="name"><a href="user">Name</a></span>
-        <span class="text">Text</span>
-    </li>
-
-    <li class="tweet">
-        <span class="name"><a href="user">Name</a></span>
-        <span class="text">Text</span>
-    </li>
-
-    <li class="tweet">
-        <span class="name"><a href="user">Name</a></span>
-        <span class="text">Text</span>
-    </li>
-
-    <li class="tweet">
-        <span class="name"><a href="user">Name</a></span>
-        <span class="text">Text</span>
-    </li>
-
-</ul>
+<table class="timeline">
+	<tr>
+	<th>user</th>
+	<th>name</th>
+	<th>date</th>
+	</tr>
+	<% @tweets.length.times do |i| %>
+	<tr>
+	<td><a href="/user/#{<=%@tweets[i].user_id%>}"><%=@tweets[i].user_id%></a></td>
+    <td class="tweet">
+        <span class="text"><%=@tweets[i].text%></span>
+    </td>
+    </tr>
+    <%end%>
+</table>
