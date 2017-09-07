@@ -4,6 +4,7 @@ require 'sinatra/reloader'
 require 'sinatra/base'
 require 'cgi'
 require_relative './model/db'
+require 'date'
 
 
 	get '/' do
@@ -16,9 +17,10 @@ require_relative './model/db'
 
 	post '/login' do
 		user = User.find_by(email: params[:email])
-		if user && user.authenticate(params[:password]) then
+		if user && (user.password == params[:password]) then
 			session[:user_id] = user.id
 		else
+
 		end
 
 		if login? then
@@ -39,7 +41,7 @@ require_relative './model/db'
 			email: params[:email],
 			password: params[:password]
 		)
-		redirect "/"
+		redirect "/login"
 	end
 
 	get '/user/follower' do
@@ -54,6 +56,15 @@ require_relative './model/db'
 		erb :tweet
 	end
 
+	post '/tweet' do
+		Tweet.create(
+			user_id: session[:user_id],
+			text: params[:tweet],
+			post_time: Date.today.to_time
+		)
+		p session[:user_id]
+		redirect '/'
+	end
 	get '/search' do
 		erb :search
 	end
