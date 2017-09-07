@@ -8,7 +8,7 @@ Time Line
 	</tr>
 	<% @tweets.length.times do |i| %>
 	<tr>
-	<td><a href="/user/#{<=%@tweets[i].user_id%>}"><%=@tweets[i].user_id%></a></td>
+	<td><a href="/user/<%= @tweets[i].user_id %>"><%=@tweets[i].user_id%></a></td>
     <td class="tweet">
         <span class="text"><%=@tweets[i].text%></span>
     </td>

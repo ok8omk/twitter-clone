@@ -1,30 +1,18 @@
 <h2>Name's Profile</h2>
-
+<h3><%=@user.name %></h3>
 <h2>Name's Tweet</h2>
-<ul>
-
-    <li class="tweet">
-        <span class="name">Name</span>
-        <span class="text">Text</span>
-        <button type="button" name="delete" value="userid"><a href="user">Delete</a></button>
-    </li>
-
-    <li class="tweet">
-        <span class="name">Name</span>
-        <span class="text">Text</span>
-        <button type="button" name="delete" value="userid"><a href="user">Delete</a></button>
-    </li>
-
-    <li class="tweet">
-        <span class="name">Name</span>
-        <span class="text">Text</span>
-        <button type="button" name="delete" value="userid"><a href="user">Delete</a></button>
-    </li>
-
-    <li class="tweet">
-        <span class="name">Name</span>
-        <span class="text">Text</span>
-        <button type="button" name="delete" value="userid"><a href="user">Delete</a></button>
-    </li>
-
-</ul>
+<table class="timeline">
+    <tr>
+    <th>user</th>
+    <th>name</th>
+    <th>date</th>
+    </tr>
+    <% @tweets.length.times do |i| %>
+    <tr>
+    <td><a href="/user/#{<=%@tweets[i].user_id%>}"><%=@user.name%></a></td>
+    <td class="tweet">
+        <span class="text"><%=@tweets[i].text%></span>
+    </td>
+    </tr>
+    <%end%>
+</table>
