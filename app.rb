@@ -2,7 +2,6 @@
 require 'sinatra'
 require 'sinatra/reloader'
 require 'sinatra/base'
-require 'cgi'
 require_relative './model/db'
 require 'date'
 

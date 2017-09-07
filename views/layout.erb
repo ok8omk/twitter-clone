@@ -11,16 +11,16 @@
         <a href="/"><i class="fa fa-home" aria-hidden="true"></i></a>
     </li>
     <li>
-        <a href="user"><i class="fa fa-user" aria-hidden="true"></i></a>
+        <a href="/user/<%= session[:user_id] %>"><i class="fa fa-user" aria-hidden="true"></i></a>
     </li>
     <li>
-        <a href="search"><i class="fa fa-search" aria-hidden="true"></i></a>
+        <a href="/search"><i class="fa fa-search" aria-hidden="true"></i></a>
     </li>
     <li>
-        <a href="tweet"><i class="fa fa-comment" aria-hidden="true"></i></a>
+        <a href="/tweet"><i class="fa fa-comment" aria-hidden="true"></i></a>
     </li>
     <li>
-        <a href="logout"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
+        <a href="/logout"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
     </li>
 </ul>
 </header>
