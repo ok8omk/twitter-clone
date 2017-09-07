@@ -51,4 +51,3 @@ end
 
 class RelationShip < ActiveRecord::Base
 end
-
