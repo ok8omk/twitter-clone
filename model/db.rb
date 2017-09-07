@@ -51,4 +51,3 @@ end
 
 class Relationship < ActiveRecord::Base
 end
-

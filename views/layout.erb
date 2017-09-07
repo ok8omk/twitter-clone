@@ -1,8 +1,28 @@
 <html>
 <head>
   <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<%= yield%>
+<header>
+<ul>
+    <li>
+        <a href="/"><i class="fa fa-home" aria-hidden="true"></i></a>
+    </li>
+    <li>
+        <a href="user"><i class="fa fa-user" aria-hidden="true"></i></a>
+    </li>
+    <li>
+        <a href="search"><i class="fa fa-search" aria-hidden="true"></i></a>
+    </li>
+    <li>
+        <a href="tweet"><i class="fa fa-comment" aria-hidden="true"></i></a>
+    </li>
+</ul>
+</header>
+<div id="content">
+<%= yield %>
+</div>
 </body>
 </html>
