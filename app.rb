@@ -8,11 +8,11 @@ require 'date'
 
 
 	get '/' do
-		erb :index 
+		erb :index
 	end
 
 	get '/login' do
-		erb :login
+		erb :login, :layout => :loginLayout 
 	end
 
 	post '/login' do
@@ -31,7 +31,7 @@ require 'date'
 	end
 
 	get '/register' do
-		erb :register
+		erb :register, :layout => :loginLayout 
 	end
 
 	post '/register' do
