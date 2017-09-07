@@ -1,21 +1,16 @@
-Search: Name
+<form action="search">
+    <input type="text" name="word">
+    <input type="submit" value="検索">
+</form>
+
+「<%= @word %>」の検索結果
 
 <ul>
 
+    <% @users.each do |u| %>
     <li>
-        <span><a href="user">Name</a></span>
+        <span><a href="user"><%= u.name %></a></span>
     </li>
-
-    <li>
-        <span><a href="user">Name</a></span>
-    </li>
-
-    <li>
-        <span><a href="user">Name</a></span>
-    </li>
-
-    <li>
-        <span><a href="user">Name</a></span>
-    </li>
+    <% end %>
 
 </ul>
