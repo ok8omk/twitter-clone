@@ -43,7 +43,7 @@ helpers do
 	end
 end
 class User < ActiveRecord::Base
-   	validates :name, uniqueness: true, presence: true,length: {minimum: 2, maximum:  10}
+   	validates :name, uniqueness: true, presence: true
 end
 
 class Tweet < ActiveRecord::Base
