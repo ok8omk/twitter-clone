@@ -93,3 +93,8 @@ require 'date'
 		@tweets=Tweet.where(user_id: params[:id]).all
 		erb :user
 	end
+
+    get '/logout' do
+        logout
+        redirect '/login'
+    end
