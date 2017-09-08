@@ -60,13 +60,22 @@ require 'date'
 
     # アカウント登録処理
 	post '/register' do
-		User.create(
-			name: params[:name],
-			email: params[:email],
-			password: params[:password]
-		)
-		session[:user_id]=User.find_by(email: params[:email]).id 
-		redirect "/"
+		if params[:password] == params[:password_confirm] then
+			isUser=User.where(name: params[:name]).exists?
+			if !isUser then
+			User.create(
+					name: params[:name],
+					email: params[:email],
+					password: params[:password]
+				)
+				session[:user_id]=User.find_by(email: params[:email]).id 
+				redirect "/"
+			else
+				redirect "/login"
+			end
+		else
+			redirect "/login"
+		end
 	end
 
 

@@ -51,7 +51,6 @@ end
 
 class User < ActiveRecord::Base
    	validates :name, uniqueness: true, presence: true,length: {minimum: 2, maximum:  10}
-   	validates :pass, uniqueness: true, presence: true
    	has_many :tweets
     has_many :relationships
 end
