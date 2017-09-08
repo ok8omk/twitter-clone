@@ -14,6 +14,10 @@
     <input type="hidden" name="user_id" value=<%=@user.id%> >
     </form>
 <% end %>
+
+<a href="/user/<%= session[:user_id] %>/follow"><div class="siimple-btn siimple-btn--blue user-follow">Follow</div></a>
+<a href="/user/<%= session[:user_id] %>/follower"><div class="siimple-btn siimple-btn--blue user-follow">Follower</div></a>
+
 <h2><%=@user.name %>'s Tweet</h2>
 <table class="timeline">
     <tr>
