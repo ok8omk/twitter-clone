@@ -65,25 +65,25 @@ require 'date'
 		redirect "/"
 	end
 
-    # フォロワー表示画面
-	get '/user/:id/follower' do
-		erb :follower
-	end
 
     # フォロー中ユーザー表示画面
 	get '/user/:id/follow' do
         # @follow : フォロー中ユーザー情報
-        @relationships = Relationship.joins("LEFT JOIN users ON relationships.follow_id = users.id").where(user_id: session[:user_id]).select("relationships.*, users.name").all
+        @relationships = Relationship.joins("LEFT JOIN users ON relationships.follow_id = users.id").where(user_id: params[:id]).select("relationships.*, users.name").all
 		erb :follow
 	end
 
     # フォロー中ユーザー表示画面
 	post '/user/:id/follow' do
-        p session[:user_id], params[:follow_id].to_i
-        r = Relationship.find_by(["user_id = ? AND follow_id = ?", session[:user_id], params[:follow_id]])
+        r = Relationship.find_by(["user_id = ? AND follow_id = ?", params[:id], params[:follow_id]])
         r.destroy
 		redirect '/user/' + params[:id] + '/follow'
     end
+
+    # フォロワー表示画面
+	get '/user/:id/follower' do
+		erb :follower
+	end
 
     # ツイート画面
 	get '/tweet' do
