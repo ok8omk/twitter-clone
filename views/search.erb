@@ -9,7 +9,7 @@
 
     <% @users.each do |u| %>
     <li>
-        <span><a href="user"><%= u.name %></a></span>
+        <span><a href="/user/<%= u.id %>"><%= u.name %></a></span>
     </li>
     <% end %>
 
