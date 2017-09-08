@@ -1,19 +1,17 @@
-<h2>Profile</h2>
-<h3><%=@user.name %></h3>
+<div class="siimple-h2"><%=@user.name %>'s Profile
 <% if @user.id != session[:user_id] then %>
-    <form method="POST" action="/follow">
+    <form method="POST" action="/follow" style="display: inline-block;">
+        <input type="hidden" name="user_id" value="<%= @user.id %>">
     <% if @isFollow then %>
-        <div class="siimple-btn siimple-btn--blue" >
-            <input type="submit" name=follow value="unfollow">
-        </div>
+        <input type="hidden" name="follow" value="unfollow">
+        <div class="siimple-btn siimple-btn--blue user-follow" onclick="javascript:this.parentNode.submit();">Unfollow</div>
     <% else %>
-        <div class="siimple-btn siimple-btn--blue" >
-            <input type="submit" name=follow value="follow">
-        </div>
+        <input type="hidden" name="follow" value="follow">
+        <div class="siimple-btn siimple-btn--blue user-follow" onclick="javascript:this.parentNode.submit();">Follow</div>
     <% end %>
-    <input type="hidden" name="user_id" value=<%=@user.id%> >
     </form>
 <% end %>
+</div>
 
 <a href="/user/<%= session[:user_id] %>/follow"><div class="siimple-btn siimple-btn--blue user-follow">Follow</div></a>
 <a href="/user/<%= session[:user_id] %>/follower"><div class="siimple-btn siimple-btn--blue user-follow">Follower</div></a>
