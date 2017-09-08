@@ -71,9 +71,19 @@ require 'date'
 	end
 
     # フォロー中ユーザー表示画面
-	get '/user/follow' do
+	get '/user/:id/follow' do
+        # @follow : フォロー中ユーザー情報
+        @relationships = Relationship.joins("LEFT JOIN users ON relationships.follow_id = users.id").where(user_id: session[:user_id]).select("relationships.*, users.name").all
 		erb :follow
 	end
+
+    # フォロー中ユーザー表示画面
+	post '/user/:id/follow' do
+        p session[:user_id], params[:follow_id].to_i
+        r = Relationship.find_by(["user_id = ? AND follow_id = ?", session[:user_id], params[:follow_id]])
+        r.destroy
+		redirect '/user/' + params[:id] + '/follow'
+    end
 
     # ツイート画面
 	get '/tweet' do
