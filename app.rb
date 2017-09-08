@@ -65,12 +65,8 @@ require 'date'
 		redirect "/login"
 	end
 
-<<<<<<< HEAD
 	get '/user/:id/follower' do
-=======
     # フォロワー表示画面
-	get '/user/follower' do
->>>>>>> feature-innerjoin
 		erb :follower
 	end
 
