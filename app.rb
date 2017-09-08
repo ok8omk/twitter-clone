@@ -4,7 +4,7 @@ require 'sinatra/reloader'
 require 'sinatra/base'
 require_relative './model/db'
 require 'date'
-
+ 
     # ホーム(タイムライン)
 	get '/' do
         # ログイン時にはタイムラインを表示
