@@ -4,7 +4,7 @@ require 'sinatra/reloader'
 require 'sinatra/base'
 require_relative './model/db'
 require 'date'
-
+ 
     # ホーム(タイムライン)
 	get '/' do
         # ログイン時にはタイムラインを表示
@@ -56,13 +56,13 @@ require 'date'
 
     # アカウント登録処理
 	post '/register' do
-		p params[:name]
 		User.create(
 			name: params[:name],
 			email: params[:email],
 			password: params[:password]
 		)
-		redirect "/login"
+		session[:user_id]=User.find_by(email: params[:email]).id 
+		redirect "/"
 	end
 
 	get '/user/:id/follower' do
@@ -122,4 +122,16 @@ require 'date'
     	end
     	uri = '/user/'+params[:user_id]
     	redirect uri
+    end
+
+    get '/setting' do
+    	@user=User.find_by(id: session[:user_id])
+    	erb :setting
+    end
+
+    post '/setting' do
+    	@user=User.find_by(id: session[:user_id])
+    	@user.name=params[:name]
+    	@user.save
+    	redirect '/setting'
     end
