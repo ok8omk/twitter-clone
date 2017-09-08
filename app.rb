@@ -5,30 +5,35 @@ require 'sinatra/base'
 require_relative './model/db'
 require 'date'
 
-
+    # ホーム(タイムライン)
 	get '/' do
+        # ログイン時にはタイムラインを表示
 		if login? then
+            # @relations    : 自分のフォロワーID(+自分のID)
+            # @tweets       : @relationsのIDを持つツイート情報
 			@relation=Relationship.where(user_id: session[:user_id]).select('follow_id').all
 			@relations=[]
 			@relation.each{|rel|
 				@relations.push(rel.follow_id)
 			}
-			#自分のidを格納
+			# 自分のidを格納
 			@relations.push(session[:user_id])
-			p @relations
-			@tweets=Tweet.where(user_id: @relations).reverse_order.all
-			@tweets
+            # @relationsのIDを持つツイートを時間昇順で取得
+            @tweets=Tweet.joins(:user).where(user_id: @relations).select("tweets.*, users.*").reverse_order.all
 			erb :index 
+        # 非ログイン時にはログイン画面にリダイレクト
 		else
 			redirect "/login"
 		end
 
 	end
 
+    # ログイン画面
 	get '/login' do
 		erb :login, :layout => :loginLayout 
 	end
 
+    # ログイン処理
 	post '/login' do
 		user = User.find_by(email: params[:email])
 		if user && (user.password == params[:password]) then
@@ -44,10 +49,12 @@ require 'date'
 		end
 	end
 
+    # アカウント登録画面
 	get '/register' do
 		erb :register, :layout => :loginLayout 
 	end
 
+    # アカウント登録処理
 	post '/register' do
 		p params[:name]
 		User.create(
@@ -58,18 +65,26 @@ require 'date'
 		redirect "/login"
 	end
 
+<<<<<<< HEAD
 	get '/user/:id/follower' do
+=======
+    # フォロワー表示画面
+	get '/user/follower' do
+>>>>>>> feature-innerjoin
 		erb :follower
 	end
 
+    # フォロー中ユーザー表示画面
 	get '/user/follow' do
 		erb :follow
 	end
 
+    # ツイート画面
 	get '/tweet' do
 		erb :tweet
 	end
 
+    # ツイート処理
 	post '/tweet' do
 		Tweet.create(
 			user_id: session[:user_id],
@@ -79,15 +94,14 @@ require 'date'
 		redirect '/'
 	end
 
-
-    # Search page
-
+    # ユーザー検索画面
 	get '/search' do
         @word = params[:word]
         @users = User.where(name: @word).all
 		erb :search
 	end
 
+    # ユーザープロフィール画面
 	get '/user/:id' do
 		@user=User.find_by(id: params[:id])
 		@isFollow=Relationship.where(user_id: session[:user_id]).where(follow_id: params[:id].to_i).exists?
@@ -95,6 +109,7 @@ require 'date'
 		erb :user
 	end
 
+    # ログアウト画面(セッションを削除し、ログイン画面にリダイレクト)
     get '/logout' do
         logout
         redirect '/login'
@@ -112,11 +127,3 @@ require 'date'
     	uri = '/user/'+params[:user_id]
     	redirect uri
     end
-
-
-
-
-
-
-
-
