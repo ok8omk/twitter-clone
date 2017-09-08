@@ -2,20 +2,21 @@
 require 'sinatra'
 require 'sinatra/reloader'
 require 'sinatra/base'
-require 'cgi'
 require_relative './model/db'
 require 'date'
 
 
 	get '/' do
 		if login? then
-			@relation=Relationship.where(user_id: session[:user_id]).all
-			@tweets=[]
+			@relation=Relationship.where(user_id: session[:user_id]).select('follow_id').all
+			@relations=[]
 			@relation.each{|rel|
-				@tweet=Tweet.where(user_id: rel.follow_id).all.each{|tw|
-					@tweets.push(tw)
-				}
+				@relations.push(rel.follow_id)
 			}
+			#自分のidを格納
+			@relations.push(session[:user_id])
+			p @relations
+			@tweets=Tweet.where(user_id: @relations).reverse_order.all
 			@tweets
 			erb :index 
 		else
@@ -73,9 +74,8 @@ require 'date'
 		Tweet.create(
 			user_id: session[:user_id],
 			text: params[:tweet],
-			post_time: DateTime.now
+			post_time: Time.now
 		)
-		p session[:user_id]
 		redirect '/'
 	end
 

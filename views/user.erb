@@ -9,10 +9,9 @@
     </tr>
     <% @tweets.length.times do |i| %>
     <tr>
-    <td><a href="/user/#{<=%@tweets[i].user_id%>}"><%=@user.name%></a></td>
-    <td class="tweet">
-        <span class="text"><%=@tweets[i].text%></span>
-    </td>
+    <td><%=@user.name%></td>
+    <td><%=@tweets[i].text%></td>
+    <td><%=@tweets[i].post_time%></td>
     </tr>
     <%end%>
 </table>
