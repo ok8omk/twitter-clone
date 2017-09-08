@@ -19,8 +19,7 @@ require 'date'
 			# 自分のidを格納
 			@relations.push(session[:user_id])
             # @relationsのIDを持つツイートを時間昇順で取得
-            @tweets=Tweet.joins(:user).where(user_id: @relations).select("tweets.*, users.*").reverse_order.all
-            p @tweets
+            @tweets=Tweet.left_joins(:user).where(user_id: @relations).select("tweets.*, users.name").order('post_time DESC').all
 			erb :index 
         # 非ログイン時にはログイン画面にリダイレクト
 		else
@@ -100,7 +99,7 @@ require 'date'
 		Tweet.create(
 			user_id: session[:user_id],
 			text: params[:tweet],
-			post_time: getTime(Time.now.year,Time.now.month,Time.now.day,Time.now.hour,Time.now.min)
+			post_time: Time.now
 		)
 		redirect '/'
 	end

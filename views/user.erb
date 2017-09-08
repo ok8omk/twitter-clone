@@ -29,7 +29,7 @@
     <tr>
     <td><a href="/article/<%= @tweets[i].id %>"><%=@tweets[i].text%></a></td>
     <td><%=@user.name%></td>
-    <td><%=@tweets[i].post_time%></td>
+    <td><%= getTime(@tweets[i].post_time)%></td>
     </tr>
     <%end%>
 </table>
