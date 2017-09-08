@@ -56,13 +56,13 @@ require 'date'
 
     # アカウント登録処理
 	post '/register' do
-		p params[:name]
 		User.create(
 			name: params[:name],
 			email: params[:email],
 			password: params[:password]
 		)
-		redirect "/login"
+		session[:user_id]=User.find_by(email: params[:email]).id 
+		redirect "/"
 	end
 
 	get '/user/:id/follower' do
