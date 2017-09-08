@@ -1,10 +1,20 @@
-<h2>Name's Profile</h2>
+<h2>Profile</h2>
 <h3><%=@user.name %></h3>
-<h2>Name's Tweet</h2>
+<% if @user.id != session[:user_id] then %>
+    <form method="POST" action="/follow">
+    <% if @isFollow then %>
+        <div class="siimple-btn siimple-btn--blue" name="follow" value="unfollow" onclick="javascript:this.parentNode.submit();">unfollow</div>
+    <% else %>
+       <div class="siimple-btn siimple-btn--blue" name="follow" value="follow" onclick="javascript:this.parentNode.submit();">follow</div>
+    <% end %>
+    <input type="hidden" name="user_id" value=<%=@user.id%> >
+    </form>
+<% end %>
+<h2><%=@user.name %>'s Tweet</h2>
 <table class="timeline">
     <tr>
     <th>user</th>
-    <th>name</th>
+    <th>tweet</th>
     <th>date</th>
     </tr>
     <% @tweets.length.times do |i| %>
