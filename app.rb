@@ -73,7 +73,7 @@ require 'date'
 
     # フォロー中ユーザー表示画面
 	get '/user/:id/follow' do
-        @relationships = Relationship.joins("LEFT JOIN users ON relationships.user_id = users.id").where(user_id: params[:id]).select("relationships.*, users.name").all
+        @relationships = Relationship.joins("LEFT JOIN users ON relationships.follow_id = users.id").where(user_id: params[:id]).select("relationships.*, users.name").all
 		erb :follow
 	end
 
