@@ -43,8 +43,9 @@ helpers do
 		session.delete(:user_id)
 	end
 
-	def getTime (year,month,day,hour,min)
-		"#{year}年#{month}月#{day}日#{hour}時#{min}分"
+	def getTime (d)
+		date=d
+		"#{date.month}月#{date.day}日#{date.hour}時#{date.min}分"
 	end
 end
 
