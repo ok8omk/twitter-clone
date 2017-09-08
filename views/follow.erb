@@ -2,15 +2,18 @@
 
 <table class="timeline">
     <tr>
-    <th>user</th>
-    <th>name</th>
-    <th>date</th>
+        <th>name</th>
+        <th>Follow?</th>
     </tr>
-    <% @tweets.length.times do |i| %>
+    <% @relationships.each do |r| %>
     <tr>
-    <td><a href="/user/<%= @tweets[i].user_id %>"><%= @tweets[i].user_id %></a></td>
-    <td><%= @tweets[i].text %></td>
-    <td><%= @tweets[i].post_time %></td>
+        <td><a href="/user/<%= r.user_id %>/follow"><%= r.name %></a></td>
+        <td>
+            <form action="/user/<%= session[:user_id] %>/follow" method="POST">
+                <input type="hidden" name="follow_id" value="<%= r.follow_id %>">
+                <div class="siimple-btn siimple-btn--blue" onclick="javascript:this.parentNode.submit();">Follow</div>
+            </form>
+        </td>
     </tr>
-    <%end%>
+    <% end %>
 </table>
