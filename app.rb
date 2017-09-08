@@ -23,14 +23,18 @@ require 'date'
 			erb :index 
         # 非ログイン時にはログイン画面にリダイレクト
 		else
-			redirect "/login"
+			redirect "/top"
 		end
 
 	end
 
+	get '/top' do
+		erb :top
+	end
+
     # ログイン画面
 	get '/login' do
-		erb :login, :layout => :loginLayout 
+		erb :login
 	end
 
     # ログイン処理
@@ -51,7 +55,7 @@ require 'date'
 
     # アカウント登録画面
 	get '/register' do
-		erb :register, :layout => :loginLayout 
+		erb :register
 	end
 
     # アカウント登録処理
@@ -118,7 +122,7 @@ require 'date'
     			follow_id: params[:user_id]
     			)
     	else
-    		Relationship.delete_all(["user_id = ? AND follow_id = ?",session[:user_id], params[:user_id]])
+    		Relationship.where(user_id: session[:user_id]).where(follow_id: params[:user_id]).delete_all
     	end
     	uri = '/user/'+params[:user_id]
     	redirect uri
