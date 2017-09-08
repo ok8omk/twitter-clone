@@ -39,3 +39,6 @@ header ul li a {
 div#content{
     padding-top:2em;
 }
+div.user-profile {
+    display: inline-block;
+}
