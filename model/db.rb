@@ -1,5 +1,6 @@
 # coding: UTF-8
 require 'active_record'
+require 'date'
 
 # DB設定ファイルの読み込み
 ActiveRecord::Base.establish_connection(
@@ -41,9 +42,14 @@ helpers do
 	def logout
 		session.delete(:user_id)
 	end
+
+	def getTime (year,month,day,hour,min)
+		"#{year}年#{month}月#{day}日#{hour}時#{min}分"
+	end
 end
 class User < ActiveRecord::Base
    	validates :name, uniqueness: true, presence: true
+   	has_many :tweets
 end
 
 class Tweet < ActiveRecord::Base
