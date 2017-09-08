@@ -1,0 +1,13 @@
+
+<h2><%=@tweet.text%></h2>
+<h2><%=@tweet.post_time%></h2>
+<h2></h2>
+
+<form method="POST" action="/article">
+<% if session[:user_id] == @tweet.user_id then %>
+	<div class="siimple-btn siimple-btn--blue" >
+	    <input type="submit" name=delete value="delete">
+    </div>
+    <input type="hidden" name="article_id" value=<%=@tweet.id%> >
+<% end %>
+</form>

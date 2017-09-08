@@ -20,6 +20,7 @@ require 'date'
 			@relations.push(session[:user_id])
             # @relationsのIDを持つツイートを時間昇順で取得
             @tweets=Tweet.joins(:user).where(user_id: @relations).select("tweets.*, users.*").reverse_order.all
+            p @tweets
 			erb :index 
         # 非ログイン時にはログイン画面にリダイレクト
 		else
@@ -149,3 +150,15 @@ require 'date'
     	@user.save
     	redirect '/setting'
     end
+
+    get '/article/:id' do
+    	@tweet=Tweet.find_by(id: params[:id])
+    	erb :article
+    end
+
+    post '/article' do
+    	@tweet=Tweet.find_by(id: params[:article_id])
+    	@tweet.destroy
+    	redirect '/'
+    end
+
