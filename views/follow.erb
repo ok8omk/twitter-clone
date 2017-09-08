@@ -9,7 +9,7 @@
     <tr>
         <td><a href="/user/<%= r.user_id %>/follow"><%= r.name %></a></td>
         <td>
-            <form action="/user/<%= session[:user_id] %>/follow" method="POST">
+            <form action="/user/<%= params[:id] %>/follow" method="POST">
                 <input type="hidden" name="follow_id" value="<%= r.follow_id %>">
                 <div class="siimple-btn siimple-btn--blue" onclick="javascript:this.parentNode.submit();">Unfollow</div>
             </form>
