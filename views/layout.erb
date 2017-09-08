@@ -8,7 +8,12 @@
 </head>
 <body>
 <header>
+<% if login? then %>
 <ul>
+
+	<li>
+		こんにちは　<%= login_user.name %>さん
+	</li>
     <li>
         <a href="/"><i class="fa fa-home" aria-hidden="true"></i></a>
     </li>
@@ -28,6 +33,19 @@
         <a href="/logout"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
     </li>
 </ul>
+<% else %>
+<ul>
+	<li>
+	<a href="/top">Twit</a>
+	</li>
+	<li>
+		こんにちはゲストさん
+	</li>
+    <li>
+        <a href="/login"><i class="fa fa-sign-in" aria-hidden="true"></i></a>
+    </li>
+</ul>
+<% end %>
 </header>
 <div id="content">
 <%= yield %>

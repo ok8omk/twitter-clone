@@ -2,14 +2,14 @@
 
 <table class="timeline">
 	<tr>
+	<th>tweet</th>
 	<th>user</th>
-	<th>name</th>
 	<th>date</th>
 	</tr>
 	<% @tweets.length.times do |i| %>
 	<tr>
+	<td><%=@tweets[i].text%></td>
 	<td><a href="/user/<%= @tweets[i].user_id %>"><%= @tweets[i].name %></a></td>
-    <td><%= @tweets[i].text %></td>
     <td><%= @tweets[i].post_time %></td>
     </tr>
     <%end%>

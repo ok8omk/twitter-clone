@@ -4,7 +4,7 @@ require 'sinatra/reloader'
 require 'sinatra/base'
 require_relative './model/db'
 require 'date'
-
+ 
     # ホーム(タイムライン)
 	get '/' do
         # ログイン時にはタイムラインを表示
@@ -20,17 +20,22 @@ require 'date'
 			@relations.push(session[:user_id])
             # @relationsのIDを持つツイートを時間昇順で取得
             @tweets=Tweet.joins(:user).where(user_id: @relations).select("tweets.*, users.*").reverse_order.all
+            p @tweets
 			erb :index 
         # 非ログイン時にはログイン画面にリダイレクト
 		else
-			redirect "/login"
+			redirect "/top"
 		end
 
 	end
 
+	get '/top' do
+		erb :top
+	end
+
     # ログイン画面
 	get '/login' do
-		erb :login, :layout => :loginLayout 
+		erb :login
 	end
 
     # ログイン処理
@@ -51,7 +56,7 @@ require 'date'
 
     # アカウント登録画面
 	get '/register' do
-		erb :register, :layout => :loginLayout 
+		erb :register
 	end
 
     # アカウント登録処理
@@ -65,15 +70,25 @@ require 'date'
 		redirect "/"
 	end
 
-	get '/user/:id/follower' do
     # フォロワー表示画面
+	get '/user/:id/follower' do
 		erb :follower
 	end
 
     # フォロー中ユーザー表示画面
-	get '/user/follow' do
+	get '/user/:id/follow' do
+        # @follow : フォロー中ユーザー情報
+        @relationships = Relationship.joins("LEFT JOIN users ON relationships.follow_id = users.id").where(user_id: session[:user_id]).select("relationships.*, users.name").all
 		erb :follow
 	end
+
+    # フォロー中ユーザー表示画面
+	post '/user/:id/follow' do
+        p session[:user_id], params[:follow_id].to_i
+        r = Relationship.find_by(["user_id = ? AND follow_id = ?", session[:user_id], params[:follow_id]])
+        r.destroy
+		redirect '/user/' + params[:id] + '/follow'
+    end
 
     # ツイート画面
 	get '/tweet' do
@@ -118,7 +133,7 @@ require 'date'
     			follow_id: params[:user_id]
     			)
     	else
-    		Relationship.delete_all(["user_id = ? AND follow_id = ?",session[:user_id], params[:user_id]])
+    		Relationship.where(user_id: session[:user_id]).where(follow_id: params[:user_id]).delete_all
     	end
     	uri = '/user/'+params[:user_id]
     	redirect uri
@@ -135,3 +150,15 @@ require 'date'
     	@user.save
     	redirect '/setting'
     end
+
+    get '/article/:id' do
+    	@tweet=Tweet.find_by(id: params[:id])
+    	erb :article
+    end
+
+    post '/article' do
+    	@tweet=Tweet.find_by(id: params[:article_id])
+    	@tweet.destroy
+    	redirect '/'
+    end
+
