@@ -74,7 +74,7 @@ require 'date'
 		Tweet.create(
 			user_id: session[:user_id],
 			text: params[:tweet],
-			post_time: Time.now
+			post_time: getTime(Time.now.year,Time.now.month,Time.now.day,Time.now.hour,Time.now.min)
 		)
 		redirect '/'
 	end
@@ -90,6 +90,7 @@ require 'date'
 
 	get '/user/:id' do
 		@user=User.find_by(id: params[:id])
+		@isFollow=Relationship.where(user_id: session[:user_id]).where(follow_id: params[:id].to_i).exists?
 		@tweets=Tweet.where(user_id: params[:id]).all
 		erb :user
 	end
@@ -98,3 +99,23 @@ require 'date'
         logout
         redirect '/login'
     end
+
+    post '/follow' do
+    	if params[:follow] == 'follow' then
+    		Relationship.create(
+    			user_id: session[:user_id],
+    			follow_id: params[:user_id]
+    			)
+    	else
+    		Relationship.destroy(user_id: session[:user_id],follow_id: params[:user_id])
+    	end
+    	redirect '/user/#{params[:user_id]}'
+    end
+
+
+
+
+
+
+
+

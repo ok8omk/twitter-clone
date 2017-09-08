@@ -43,8 +43,8 @@ helpers do
 		session.delete(:user_id)
 	end
 
-	def getTime (month,day,hour,min)
-		"#{month}/#{day}-#{hour}:#{min}"
+	def getTime (year,month,day,hour,min)
+		"#{year}年#{month}月#{day}日#{hour}時#{min}分"
 	end
 end
 class User < ActiveRecord::Base
