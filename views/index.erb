@@ -8,7 +8,7 @@
 	</tr>
 	<% @tweets.length.times do |i| %>
 	<tr>
-	<td><a href="/user/<%= @tweets[i].user_id %>"><%= @tweets[i].user_id %></a></td>
+	<td><a href="/user/<%= @tweets[i].user_id %>"><%= @tweets[i].name %></a></td>
     <td><%= @tweets[i].text %></td>
     <td><%= @tweets[i].post_time %></td>
     </tr>
