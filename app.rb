@@ -58,7 +58,7 @@ require 'date'
 		redirect "/login"
 	end
 
-	get '/user/follower' do
+	get '/user/:id/follower' do
 		erb :follower
 	end
 
@@ -107,9 +107,11 @@ require 'date'
     			follow_id: params[:user_id]
     			)
     	else
-    		Relationship.destroy(user_id: session[:user_id],follow_id: params[:user_id])
+    		Relationship.delete_all(["user_id = ? AND follow_id = ?",session[:user_id], params[:user_id]])
     	end
-    	redirect '/user/#{params[:user_id]}'
+    	uri = '/user/'+params[:user_id]
+    	p params[:follow]
+    	redirect uri
     end
 
 
