@@ -47,13 +47,17 @@ helpers do
 		"#{month}/#{day}-#{hour}:#{min}"
 	end
 end
+
 class User < ActiveRecord::Base
    	validates :name, uniqueness: true, presence: true
    	has_many :tweets
+    has_many :relationships
 end
 
 class Tweet < ActiveRecord::Base
+    belongs_to :user
 end
 
 class Relationship < ActiveRecord::Base
+    belongs_to :user
 end
