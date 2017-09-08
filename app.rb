@@ -123,3 +123,15 @@ require 'date'
     	uri = '/user/'+params[:user_id]
     	redirect uri
     end
+
+    get '/setting' do
+    	@user=User.find_by(id: session[:user_id])
+    	erb :setting
+    end
+
+    post '/setting' do
+    	@user=User.find_by(id: session[:user_id])
+    	@user.name=params[:name]
+    	@user.save
+    	redirect '/setting'
+    end
