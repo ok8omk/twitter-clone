@@ -110,7 +110,6 @@ require 'date'
     		Relationship.delete_all(["user_id = ? AND follow_id = ?",session[:user_id], params[:user_id]])
     	end
     	uri = '/user/'+params[:user_id]
-    	p params[:follow]
     	redirect uri
     end
 
