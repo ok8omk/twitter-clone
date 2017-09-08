@@ -3,9 +3,13 @@
 <% if @user.id != session[:user_id] then %>
     <form method="POST" action="/follow">
     <% if @isFollow then %>
-        <div class="siimple-btn siimple-btn--blue" name="follow" value="unfollow" onclick="javascript:this.parentNode.submit();">unfollow</div>
+        <div class="siimple-btn siimple-btn--blue" >
+            <input type="submit" name=follow value="unfollow">
+        </div>
     <% else %>
-       <div class="siimple-btn siimple-btn--blue" name="follow" value="follow" onclick="javascript:this.parentNode.submit();">follow</div>
+        <div class="siimple-btn siimple-btn--blue" >
+            <input type="submit" name=follow value="follow">
+        </div>
     <% end %>
     <input type="hidden" name="user_id" value=<%=@user.id%> >
     </form>

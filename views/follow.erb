@@ -1,25 +1,16 @@
-Name's Follow
+<div class="siimple-h2">Follow List</div>
 
-<ul>
-
-    <li>
-        <span>Name</span>
-        <button type="button" value="follow" value="followflag">+</button>
-    </li>
-
-    <li>
-        <span>Name</span>
-        <button type="button" value="follow" value="followflag">+</button>
-    </li>
-
-    <li>
-        <span>Name</span>
-        <button type="button" value="follow" value="followflag">+</button>
-    </li>
-
-    <li>
-        <span>Name</span>
-        <button type="button" value="follow" value="followflag">+</button>
-    </li>
-
-</ul>
+<table class="timeline">
+    <tr>
+    <th>user</th>
+    <th>name</th>
+    <th>date</th>
+    </tr>
+    <% @tweets.length.times do |i| %>
+    <tr>
+    <td><a href="/user/<%= @tweets[i].user_id %>"><%= @tweets[i].user_id %></a></td>
+    <td><%= @tweets[i].text %></td>
+    <td><%= @tweets[i].post_time %></td>
+    </tr>
+    <%end%>
+</table>
