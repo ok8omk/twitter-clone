@@ -1,25 +1,26 @@
-Name's Follower
+<div class="siimple-h2">Follower List</div>
 
-<ul>
-
-    <li>
-        <span>Name</span>
-        <button type="button" value="follow" value="followflag">-</button>
-    </li>
-
-    <li>
-        <span>Name</span>
-        <button type="button" value="follow" value="followflag">-</button>
-    </li>
-
-    <li>
-        <span>Name</span>
-        <button type="button" value="follow" value="followflag">-</button>
-    </li>
-
-    <li>
-        <span>Name</span>
-        <button type="button" value="follow" value="followflag">-</button>
-    </li>
-
-</ul>
+<table class="timeline">
+    <tr>
+        <th>name</th>
+        <th>Follow?</th>
+    </tr>
+    <% for num in 1..@relationships.length do %>
+    <% r = @relationships[num-1] %>
+    <% f = @follow[num-1] %>
+    <tr>
+        <td><a href="/user/<%= r.user_id %>"><%= r.name %></a></td>
+        <td>
+            <form action="/user/<%= params[:id] %>/follower" method="POST">
+            <% if f then %>
+                <input type="hidden" name="follow_id" value="<%= r.user_id %>">
+                <div class="siimple-btn siimple-btn--blue" onclick="javascript:this.parentNode.submit();">Unfollow</div>
+            <% else %>
+                <input type="hidden" name="follow_id" value="<%= - r.user_id %>">
+                <div class="siimple-btn siimple-btn--blue" onclick="javascript:this.parentNode.submit();">Follow</div>
+            <% end %>
+            </form>
+        </td>
+    </tr>
+    <% end %>
+</table>

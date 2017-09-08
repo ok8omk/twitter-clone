@@ -69,25 +69,41 @@ require 'date'
 		redirect "/"
 	end
 
-    # フォロワー表示画面
-	get '/user/:id/follower' do
-		erb :follower
-	end
 
     # フォロー中ユーザー表示画面
 	get '/user/:id/follow' do
-        # @follow : フォロー中ユーザー情報
-        @relationships = Relationship.joins("LEFT JOIN users ON relationships.follow_id = users.id").where(user_id: session[:user_id]).select("relationships.*, users.name").all
+        @relationships = Relationship.joins("LEFT JOIN users ON relationships.follow_id = users.id").where(user_id: params[:id]).select("relationships.*, users.name").all
 		erb :follow
 	end
 
-    # フォロー中ユーザー表示画面
+    # unfollow処理
 	post '/user/:id/follow' do
-        p session[:user_id], params[:follow_id].to_i
-        r = Relationship.find_by(["user_id = ? AND follow_id = ?", session[:user_id], params[:follow_id]])
+        r = Relationship.find_by(["user_id = ? AND follow_id = ?", params[:id], params[:follow_id]])
         r.destroy
 		redirect '/user/' + params[:id] + '/follow'
     end
+
+    # フォロワー表示画面
+	get '/user/:id/follower' do
+        # @follow : フォロー中ユーザー情報
+        @relationships = Relationship.joins("LEFT JOIN users ON relationships.user_id = users.id").where(follow_id: params[:id]).select("relationships.*, users.name").all
+        @follow = Array.new(@relationships.length)
+        for num in 1..@relationships.length do
+            @follow[num-1] =  Relationship.where(["user_id = ? AND follow_id = ?", params[:id], @relationships[num-1].user_id]).exists?
+        end
+		erb :follower
+	end
+
+    # follow/unfollow処理
+	post '/user/:id/follower' do
+        if params[:follow_id].to_i > 0 then
+            r = Relationship.find_by(["user_id = ? AND follow_id = ?", params[:id], params[:follow_id].to_i])
+            r.destroy
+        else
+            Relationship.create(user_id: params[:id], follow_id: - params[:follow_id].to_i)
+        end
+		redirect '/user/' + params[:id] + '/follower'
+	end
 
     # ツイート画面
 	get '/tweet' do
